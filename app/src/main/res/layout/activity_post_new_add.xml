@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PostNewAddActivity">
+
+   <com.google.android.material.textfield.TextInputLayout
+       style="@style/TextInputLayout"
+       android:hint="What You Are Selling? / Name of Item"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <com.google.android.material.textfield.TextInputEditText
+           android:inputType="textEmailSubject"
+           android:id="@+id/newTitleEt"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+
+   </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="Price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newPriceEt"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="Details of Item"
+        android:gravity="top|start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:lines="5"
+            android:inputType="textMultiLine"
+            android:gravity="top|start"
+            android:id="@+id/newDescpEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
