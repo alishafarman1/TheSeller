@@ -5,26 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:clipToPadding="false"
-        android:paddingBottom="80dp"
         android:id="@+id/homeRecentPostsRv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp" />
 
 
     <Button
-        android:elevation="20dp"
         android:id="@+id/postAddBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:backgroundTint="@color/colorAccent"
+        android:elevation="20dp"
         android:text="POST YOUR ADD"
-        android:textColor="@android:color/white"
-        />
+        android:textColor="@android:color/white" />
 
 </FrameLayout>
