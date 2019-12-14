@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements RecyclerGeneralAd
         types = new HashMap();
         types.put(1,R.layout.post_item_layout);
         types.put(2,R.layout.header_layout);
-        adapter = new RecyclerGeneralAdapter<Post>(R.layout.post_item_layout,recentAdds,this,this,types);
+        adapter = new RecyclerGeneralAdapter<Post>(recentAdds,this,this,types);
         homeRecentPostsRv.setAdapter(adapter);
         homeRecentPostsRv.setLayoutManager(new LinearLayoutManager(this));
         postAddBtn = findViewById(R.id.postAddBtn);

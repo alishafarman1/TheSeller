@@ -1,55 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".PostNewAddActivity">
 
-   <com.google.android.material.textfield.TextInputLayout
-       style="@style/TextInputLayout"
-       android:hint="What You Are Selling? / Name of Item"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-
-       <com.google.android.material.textfield.TextInputEditText
-           android:inputType="textEmailSubject"
-           android:id="@+id/newTitleEt"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content" />
-
-   </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/TextInputLayout"
-        android:hint="Price"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newPriceEt"
-            android:inputType="number"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="What You Are Selling? / Name of Item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="textEmailSubject"
+                android:id="@+id/newTitleEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/TextInputLayout"
-        android:hint="Details of Item"
-        android:gravity="top|start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:lines="5"
-            android:inputType="textMultiLine"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="Price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/newPriceEt"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="Details of Item"
             android:gravity="top|start"
-            android:id="@+id/newDescpEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:lines="5"
+                android:inputType="textMultiLine"
+                android:gravity="top|start"
+                android:id="@+id/newDescpEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:hint="Address"
+                android:gravity="top|start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textEmailSubject"
+                    android:id="@+id/newAddressEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/addressPicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+
+        <TextView
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Images"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/newImagesRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/postAddBtn"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="POST ADD"
+            />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

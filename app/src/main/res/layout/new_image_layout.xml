@@ -4,17 +4,26 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     card_view:cardCornerRadius="20dp"
+    card_view:cardBackgroundColor="@color/colorPrimary"
     android:layout_marginTop="5dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
     android:layout_marginBottom="5dp"
+    android:layout_marginEnd="10dp"
     android:layout_width="100dp"
     android:layout_height="100dp">
 
     <ImageView
-        android:layout_margin="10dp"
+        android:id="@+id/newImageIv"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:src="@drawable/add_image" />
+
+    <ImageView
+        android:id="@+id/newImageRemoveBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/remove"
+        android:layout_gravity="center"
+        />
 
 </androidx.cardview.widget.CardView>

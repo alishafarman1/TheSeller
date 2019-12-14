@@ -24,8 +24,7 @@ public class RecyclerGeneralAdapter<T> extends RecyclerView.Adapter<RecyclerGene
         this.binder = binder;
     }
 
-    public RecyclerGeneralAdapter(int layoutFile, ArrayList<T> data, OnViewBinder<T> binder, OnViewTypeDecision viewTypeDecision, Map<Integer, Integer> viewTypes) {
-        this.layoutFile = layoutFile;
+    public RecyclerGeneralAdapter(ArrayList<T> data, OnViewBinder<T> binder, OnViewTypeDecision viewTypeDecision, Map<Integer, Integer> viewTypes) {
         this.data = data;
         this.binder = binder;
         this.viewTypeDecision = viewTypeDecision;
