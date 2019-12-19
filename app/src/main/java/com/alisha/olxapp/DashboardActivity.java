@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,6 +21,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -44,6 +50,8 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
     RecyclerView homeRecentPostsRv;
     Map<Integer,Integer> types;
     Button postAddBtn;
+    DatabaseReference posts;
+    ChildEventListener listener;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -86,8 +94,8 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
     }
 
     private void setupView(){
+        posts = FirebaseDatabase.getInstance().getReference("posts");
         recentAdds = new ArrayList<>();
-        SampleData.fillData(recentAdds);
         homeRecentPostsRv = findViewById(R.id.homeRecentPostsRv);
         types = new HashMap();
         types.put(1,R.layout.post_item_layout);
@@ -102,6 +110,35 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
                 startActivity(new Intent(DashboardActivity.this,PostNewAddActivity.class));
             }
         });
+        listener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Post post = dataSnapshot.getValue(Post.class);
+                recentAdds.add(post);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        posts.addChildEventListener(listener);
     }
 
     @Override
@@ -128,7 +165,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
             TextView priceTv = itemView.findViewById(R.id.postItemPriceTv);
             TextView dateTv = itemView.findViewById(R.id.postItemDateTv);
 
-            Glide.with(this).load(data.getImagesDemo().get(0)).into(imageIv);
+            Glide.with(this).load(data.getImages().get(0)).into(imageIv);
             titleTv.setText(data.getTitle());
             priceTv.setText("Rs. " + data.getPrice());
             dateTv.setText(data.getCreatedDate());
