@@ -53,8 +53,7 @@
         </activity>
         <activity
             android:name=".PostNewAddActivity"
-            android:label="Post New Add"
-            android:parentActivityName=".DashboardActivity" />
+            android:label="Post New Add" />
         <activity
             android:name=".PostDetailActivity"
              />
