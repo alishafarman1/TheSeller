@@ -2,21 +2,22 @@ package com.alisha.olxapp.models;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Post {
+public class Post implements Serializable {
     private String title;
     private String description;
     private String createdDate;
     private int price;
     private List<String> images;
     private String uid;
-    private FirebaseUser user;
+    private AppUser user;
     private Cords location;
     private String address;
 
-    public Post(String title, String description, String createdDate, int price, ArrayList<String> images, String uid, FirebaseUser user, Cords location, String address) {
+    public Post(String title, String description, String createdDate, int price, ArrayList<String> images, String uid, AppUser user, Cords location, String address) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
@@ -73,11 +74,11 @@ public class Post {
         this.uid = uid;
     }
 
-    public FirebaseUser getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(FirebaseUser user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 

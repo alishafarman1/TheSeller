@@ -38,6 +38,13 @@ dependencies {
     //ImagePicker : https://github.com/nguyenhoanglam/ImagePicker
     implementation 'com.github.nguyenhoanglam:ImagePicker:1.3.3'
 
+    //For json string to class and vise versa : https://github.com/google/gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    //Image Viewer : https://github.com/VEINHORN/ScrollGalleryView
+    implementation 'com.veinhorn.scrollgalleryview:library:1.2.7'
+    implementation 'com.veinhorn.scrollgalleryview:picasso-loader:1.2.7'
+
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.google.android.material:material:1.2.0-alpha02'

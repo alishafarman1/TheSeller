@@ -1,9 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PostDetailActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                tools:src="@drawable/sample_pic_1"
+                android:scaleType="centerCrop"
+                android:id="@+id/dpostMainImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:paddingEnd="10dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/dpostTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Car For sale"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="25sp"/>
+
+                        <TextView
+                            android:id="@+id/dpostPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Rs 20000"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+
+
+                        <TextView
+                            android:id="@+id/dpostUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Posted By Ishaq Hassan"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="17sp"/>
+
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/dpostAddreess"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            tools:text="H NO.Z/457 2ND.FLOOR BLOCK/3 CHOTTI MARKET COMM AREA BAHADURABAD Karachi"
+                            android:textStyle="bold"/>
+
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/dpostDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="12/12/2020"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/dpostDescp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="12/12/2020"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/dpostCallBtn"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="CALL"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent" />
+
+        <LinearLayout
+            android:id="@+id/dpostLocateBtn"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="LOCATE"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

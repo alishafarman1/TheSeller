@@ -30,10 +30,11 @@
             android:hint="Name"/>
 
         <EditText
-            android:id="@+id/uname"
+            android:id="@+id/phone"
+            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"/>
+            android:hint="Phone"/>
 
 
         <EditText

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alisha.olxapp.adapters.RecyclerGeneralAdapter;
+import com.alisha.olxapp.models.AppUser;
 import com.alisha.olxapp.models.Cords;
 import com.alisha.olxapp.models.Post;
 import com.alisha.olxapp.models.PostImage;
@@ -29,11 +30,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
@@ -195,7 +198,7 @@ public class PostNewAddActivity extends AppCompatActivity {
                                     post.setImages(postImages);
                                     Toast.makeText(PostNewAddActivity.this,""+post.getImages().size(),Toast.LENGTH_SHORT).show();
                                     progressDialog.show();
-                                    post.setUser(FirebaseAuth.getInstance().getCurrentUser());
+                                    post.setUser(getUser());
                                     post.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                     post.setTitle(newTitleEt.getText().toString());
                                     post.setPrice(Integer.valueOf(newPriceEt.getText().toString()));
@@ -254,5 +257,14 @@ public class PostNewAddActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public static AppUser getUser(){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        AppUser appUser = (new Gson()).fromJson(firebaseUser.getDisplayName(),AppUser.class);
+        appUser.setEmail(firebaseUser.getEmail());
+        appUser.setImage(firebaseUser.getPhotoUrl().toString());
+        appUser.setId(firebaseUser.getUid());
+        return  appUser;
     }
 }

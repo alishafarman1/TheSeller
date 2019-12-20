@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.alisha.olxapp.adapters.RecyclerGeneralAdapter;
+import com.alisha.olxapp.models.AppUser;
 import com.alisha.olxapp.models.Post;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,11 +22,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -43,7 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DashboardActivity extends AppCompatActivity implements RecyclerGeneralAdapter.OnViewBinder<Post>, RecyclerGeneralAdapter.OnViewTypeDecision {
+public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,RecyclerGeneralAdapter.OnViewBinder<Post>, RecyclerGeneralAdapter.OnViewTypeDecision {
 
     ArrayList<Post> recentAdds;
     RecyclerGeneralAdapter adapter;
@@ -62,11 +65,19 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        AppUser appUser = (new Gson()).fromJson(FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),AppUser.class);
+        ImageView iv = navigationView.getHeaderView(0).findViewById(R.id.navImageView);
+        TextView nameTv = navigationView.getHeaderView(0).findViewById(R.id.navNameView);
+        TextView emailTv = navigationView.getHeaderView(0).findViewById(R.id.navEmailView);
+        Glide.with(this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(iv);
+        nameTv.setText(appUser.getName()+" - "+appUser.getPhone());
+        emailTv.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                 R.id.nav_postNewAdd, R.id.nav_logout)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -74,22 +85,20 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
         ActionBarDrawerToggle mDrawerToggle;
         mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.action_logout, R.string.action_logout)
         {
-
             public void onDrawerClosed(View view)
             {
                 supportInvalidateOptionsMenu();
-                //drawerOpened = false;
             }
 
             public void onDrawerOpened(View drawerView)
             {
                 supportInvalidateOptionsMenu();
-                //drawerOpened = true;
             }
         };
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+
         setupView();
     }
 
@@ -114,8 +123,11 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Post post = dataSnapshot.getValue(Post.class);
+                if(recentAdds.isEmpty()){
+                    recentAdds.add(new Post());
+                }
                 recentAdds.add(post);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemInserted(recentAdds.size()-1);
             }
 
             @Override
@@ -151,14 +163,27 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.action_logout){
-
+            FirebaseAuth.getInstance().signOut();
+            Intent newIntent = new Intent(DashboardActivity.this,MainActivity.class);
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(newIntent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onBindView(Post data, RecyclerGeneralAdapter.RecyclerGeneralViewHolder viewHolder) {
+    public void onBindView(final Post data, RecyclerGeneralAdapter.RecyclerGeneralViewHolder viewHolder) {
         View itemView = viewHolder.itemView;
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DashboardActivity.this,PostDetailActivity.class);
+                i.putExtra("post",(new Gson()).toJson(data));
+                startActivity(i);
+            }
+        });
         if(viewHolder.getItemViewType() == 1) {
             ImageView imageIv = itemView.findViewById(R.id.postItemImageIv);
             TextView titleTv = itemView.findViewById(R.id.postItemTitleTv);
@@ -168,7 +193,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
             Glide.with(this).load(data.getImages().get(0)).into(imageIv);
             titleTv.setText(data.getTitle());
             priceTv.setText("Rs. " + data.getPrice());
-            dateTv.setText(data.getCreatedDate());
+            dateTv.setText("Posted by "+youOrName(data)+" at "+data.getCreatedDate());
         }else{
             TextView postListHeaderTv = itemView.findViewById(R.id.postListHeaderTv);
             postListHeaderTv.setText(R.string.homeListTitle);
@@ -177,6 +202,39 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerGene
 
     @Override
     public int onViewType(int position) {
-        return (recentAdds.get(position).getDescription() == null ? 2 : 1);
+        return (position == 0 ? 2 : 1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        posts.removeEventListener(listener);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.nav_postNewAdd){
+            startActivity(new Intent(DashboardActivity.this,PostNewAddActivity.class));
+            return true;
+        }
+        if(id == R.id.nav_logout){
+            FirebaseAuth.getInstance().signOut();
+            Intent newIntent = new Intent(DashboardActivity.this,MainActivity.class);
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(newIntent);
+            finish();
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isYours(Post post){
+        return (post.getUser().getId().equals(FirebaseAuth.getInstance().getUid()));
+    }
+
+    public static String youOrName(Post post){
+        return isYours(post) ? "You" : post.getUser().getName();
     }
 }
